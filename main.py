@@ -7,4 +7,6 @@ def main():
     run_menu()
 
 
-main()
+if __name__ == "__main__":
+
+    main()

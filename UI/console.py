@@ -39,6 +39,7 @@ def show_all(lista):
 
 
 def run_menu(lista):
+    lista = []
     while True:
         print_menu()
         optiune = input("Dati optiune: ")
