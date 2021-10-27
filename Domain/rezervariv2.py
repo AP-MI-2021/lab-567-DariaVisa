@@ -17,23 +17,23 @@ def get_id(rezervare):
     :param rezervare: dictionar ce contine o rezervare
     :return: id-ul rezervarii
     """
-    return rezervare["id"]
-
-
-def get_nume(rezervare):
     return rezervare[0]
 
 
-def get_clasa(rezervare):
+def get_nume(rezervare):
     return rezervare[1]
 
 
-def get_pret(rezervare):
+def get_clasa(rezervare):
     return rezervare[2]
 
 
-def get_checkin(rezervare):
+def get_pret(rezervare):
     return rezervare[3]
+
+
+def get_checkin(rezervare):
+    return rezervare[4]
 
 
 def to_string(rezervare):

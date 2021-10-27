@@ -4,7 +4,8 @@ from UI.console import run_menu
 
 def main():
     run_all_tests()
-    run_menu()
+    lista = []
+    run_menu(lista)
 
 
 if __name__ == "__main__":

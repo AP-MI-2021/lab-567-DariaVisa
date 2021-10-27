@@ -37,18 +37,18 @@ def test_modifica_prajitura():
     assert get_checkin(rezervare_update) is True
 
     rezervare_fara_update = get_by_id("2", lista)
-    assert get_id(rezervare_update) == "2"
-    assert get_nume(rezervare_update) == "avion2"
-    assert get_clasa(rezervare_update) == "economy"
-    assert get_pret(rezervare_update) == 100
-    assert get_checkin(rezervare_update) is True
+    assert get_id(rezervare_fara_update) == "2"
+    assert get_nume(rezervare_fara_update) == "avion2"
+    assert get_clasa(rezervare_fara_update) == "economy"
+    assert get_pret(rezervare_fara_update) == 100
+    assert get_checkin(rezervare_fara_update) is True
 
     lista = adauga_rezervare("1", "avion1", "business", 1200, True, [])
     lista = modifica_rezervare("3", "avion3", "economy plus", 1800, True, lista)
 
     rezervare_fara_update = get_by_id("1", lista)
-    assert get_id(rezervare_update) == "1"
-    assert get_nume(rezervare_update) == "avion1"
-    assert get_clasa(rezervare_update) == "business"
-    assert get_pret(rezervare_update) == 1200
-    assert get_checkin(rezervare_update) is True
+    assert get_id(rezervare_fara_update) == "1"
+    assert get_nume(rezervare_fara_update) == "avion1"
+    assert get_clasa(rezervare_fara_update) == "business"
+    assert get_pret(rezervare_fara_update) == 1200
+    assert get_checkin(rezervare_fara_update) is True
