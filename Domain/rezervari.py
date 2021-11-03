@@ -4,7 +4,7 @@ creeaza o rezervare
     :param id: string
     :param nume: string
     :param clasa: string
-    :param pret: float
+    :param pret: int
     :param checkin: boolean
     :return:
     """
