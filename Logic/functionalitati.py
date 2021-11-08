@@ -25,6 +25,8 @@ Reducem pretul rezervarii daca s-a facut checkin
     :param reducere: integer
     :return: lista noua cu ieftinirea rezervarilor
     """
+    if reducere < 0:
+        raise ValueError("Reducerea trebuie sa fie un numaer pozitiv!")
     lista_noua = []
     for rezervare in lista:
         if get_checkin(rezervare) is True:
@@ -39,3 +41,48 @@ Reducem pretul rezervarii daca s-a facut checkin
         else:
             lista_noua.append(rezervare)
     return lista_noua
+
+
+def pret_maxim_clasa(lista):
+    """
+Determinam pretul maxim pentru fiecare clasa
+    :param lista: lista rezervarilor
+    :return: un dictionar cu preturile maxime ale claselor
+    """
+    rezultat = {"economy": 0, "economy plus": 0, "business": 0}
+    for rezervare in lista:
+        if get_clasa(rezervare) == "economy":
+            if get_pret(rezervare) > rezultat["economy"]:
+                rezultat["economy"] = get_pret(rezervare)
+        elif get_clasa(rezervare) == "economy plus":
+            if get_pret(rezervare) > rezultat["economy plus"]:
+                rezultat["economy plus"] = get_pret(rezervare)
+        elif get_clasa(rezervare) == "business":
+            if get_pret(rezervare) > rezultat["business"]:
+                rezultat["business"] = get_pret(rezervare)
+    return rezultat
+
+
+def ordonare_descrescatoare(lista):
+    """
+Ordonarea descrescător dupa pret
+    :param lista: lista rezervarilor
+    :return: lista ordonata
+    """
+    sorted_list = sorted(lista, key = lambda rezervare: get_pret(rezervare))
+    return sorted_list[::-1]
+
+
+def suma_pret(lista):
+    """
+Determiam suma preturilor pentru fiecare nume
+    :param lista:lista rezervarilor
+    :return:dictionar cu sumele
+    """
+    rezultat = {}
+    for rezervare in lista:
+        if get_nume(rezervare) in rezultat:
+            rezultat[get_nume(rezervare)] += get_pret(rezervare)
+        else:
+            rezultat[get_nume(rezervare)] = get_pret(rezervare)
+    return rezultat

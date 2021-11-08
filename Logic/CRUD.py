@@ -7,11 +7,13 @@ adauga o rezervare dupa id
     :param id: string
     :param nume: string
     :param clasa: string
-    :param pret: float
+    :param pret: int
     :param checkin: boolean
     :param lista: lista de rezervari
     :return: lista cu rezervarile vechi si cea noua
     """
+    if get_by_id(id, lista) is not None:
+        raise ValueError("Id-ul exista deja!")
     rezervare = creeaza_rezervare(id, nume, clasa, pret, checkin)
     return lista + [rezervare]
 
@@ -36,6 +38,8 @@ sterge o rezervare dupa id-ul dat
     :param lista: lista de rezervari
     :return: o lista de rezervari fara rezervarea stearsa
     """
+    if get_by_id(id, lista) is None:
+        raise ValueError("Rezervarea nu exista!")
     return [rezervare for rezervare in lista if get_id(rezervare) != id]
 
 
@@ -50,6 +54,8 @@ modifica rezervarea cu id-ul dat
     :param lista:lista de rezervari
     :return: lista modificata
     """
+    if get_by_id(id, lista) is None:
+        raise ValueError("Rezervarea nu exista!")
     lista_noua = []
     for rezervare in lista:
         if get_id(rezervare) == id:

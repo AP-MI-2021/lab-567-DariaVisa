@@ -19,9 +19,16 @@ def test_sterge_rezervare():
     assert len(lista) == 1
     assert get_by_id("1", lista) is None
     assert get_by_id("2", lista) is not None
-    lista = sterge_rezervare("2", lista)
-    assert len(lista) == 0
-    assert get_by_id("1", lista) is None
+
+
+    try:
+        lista = sterge_rezervare("3", lista)
+        assert False
+    except ValueError:
+        assert len(lista) == 1
+        assert get_by_id("2", lista) is not None
+    except Exception:
+        assert False
 
 
 def test_modifica_rezervare():
@@ -43,13 +50,17 @@ def test_modifica_rezervare():
     assert get_pret(rezervare_fara_update) == 100
     assert get_checkin(rezervare_fara_update) is True
 
-    lista = adauga_rezervare("1", "avion1", "business", 1200, True, [])
-    lista = modifica_rezervare("3", "avion3", "economy plus", 1800, True, lista)
 
-    rezervare_fara_update = get_by_id("1", lista)
-    assert get_id(rezervare_fara_update) == "1"
-    assert get_nume(rezervare_fara_update) == "avion1"
-    assert get_clasa(rezervare_fara_update) == "business"
-    assert get_pret(rezervare_fara_update) == 1200
-    assert get_checkin(rezervare_fara_update) is True
-
+    lista = []
+    lista = adauga_rezervare("1", "avion1", "business", 1200, True, lista)
+    try:
+        lista = modifica_rezervare("3", "avion3", "economy plus", 1800, True, lista)
+    except ValueError:
+        rezervare_fara_update = get_by_id("1", lista)
+        assert get_id(rezervare_fara_update) == "1"
+        assert get_nume(rezervare_fara_update) == "avion1"
+        assert get_clasa(rezervare_fara_update) == "business"
+        assert get_pret(rezervare_fara_update) == 1200
+        assert get_checkin(rezervare_fara_update) is True
+    except Exception:
+        assert False
