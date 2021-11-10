@@ -19,53 +19,63 @@ def print_menu():
     print("x.Iesire")
 
 
-def ui_adauga_rez(lista):
+def ui_adauga_rez(lista, undo_list, redo_list):
     try:
         id = input("Dati id-ul:")
         nume = input("Dati numele:")
         clasa = input("Dati clasa:")
         pret = int(input("Dati pretul:"))
         checkin = bool(input("Dati checkin-ul:"))
+        undo_list.append(lista)
+        redo_list.clear()
         return adauga_rezervare(id, nume, clasa, pret, checkin, lista)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def ui_sterge_rez(lista):
+def ui_sterge_rez(lista, undo_list, redo_list):
     try:
         id = input("Dati id-ul rezervarii de sters:")
+        undo_list.append(lista)
+        redo_list.clear()
         return sterge_rezervare(id, lista)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def ui_modifica_rez(lista):
+def ui_modifica_rez(lista, undo_list, redo_list):
     try:
         id = input("Dati id-ul rezervarii de modificat:")
         nume = input("Dati noul nume:")
         clasa = input("Dati noua clasa:")
         pret = int(input("Dati noul pret:"))
         checkin = bool(input("Dati noul checkin:"))
+        undo_list.append(lista)
+        redo_list.clear()
         return modifica_rezervare(id, nume, clasa, pret, checkin, lista)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def ui_update_clasa(lista):
+def ui_update_clasa(lista, undo_list, redo_list):
     try:
         nume = input("Dati un nume pentru a modifica clasa:")
+        undo_list.append(lista)
+        redo_list.clear()
         return update_clasa(nume, lista)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def ui_ieftinire_rezervare(lista):
+def ui_ieftinire_rezervare(lista, undo_list, redo_list):
     try:
         reducere = int(input("Dati un numar pentru a reduce rezervarea:"))
+        undo_list.append(lista)
+        redo_list.clear()
         return ieftinire_rezervare(lista, reducere)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
@@ -97,48 +107,32 @@ def run_menu():
         print_menu()
         optiune = input("Dati optiune: ")
         if optiune == "1":
-            if len(lista) > 0:
-                undo_list.append(lista)
-            lista = ui_adauga_rez(lista)
+            lista = ui_adauga_rez(lista, undo_list, redo_list)
         elif optiune == "2":
-            if len(lista) > 0:
-                undo_list.append(lista)
-            lista = ui_sterge_rez(lista)
+            lista = ui_sterge_rez(lista, undo_list, redo_list)
         elif optiune == "3":
-            if len(lista) > 0:
-                undo_list.append(lista)
-            lista = ui_modifica_rez(lista)
+            lista = ui_modifica_rez(lista, undo_list, redo_list)
         elif optiune == "a":
             show_all(lista)
         elif optiune == "4":
-            if len(lista) > 0:
-                undo_list.append(lista)
-            lista = ui_update_clasa(lista)
+            lista = ui_update_clasa(lista, undo_list, redo_list)
         elif optiune == "5":
-            if len(lista) > 0:
-                undo_list.append(lista)
-            lista = ui_ieftinire_rezervare(lista)
+            lista = ui_ieftinire_rezervare(lista, undo_list, redo_list)
         elif optiune == "6":
-            if len(lista) > 0:
-                undo_list.append(lista)
             ui_pret_maxim_clasa(lista)
         elif optiune == "7":
-            if len(lista) > 0:
-                undo_list.append(lista)
             ui_ordonare_descrescatoare(lista)
         elif optiune == "8":
-            if len(lista) > 0:
-                undo_list.append(lista)
             ui_suma_pret(lista)
         elif optiune == "u":
             if len(undo_list) > 0:
-                redo_list.append(undo_list[len(undo_list)-1])
                 redo_list.append(lista)
                 lista = undo_list.pop()
             else:
                 print("Nu se poate face undo!")
         elif optiune == "r":
             if len(redo_list) > 0:
+                undo_list.append(lista)
                 lista = redo_list.pop()
             else:
                 print("Nu se poate face redo!")
